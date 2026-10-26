@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Class Results — Smart Academy International</title>
+<style>
+:root{--navy:#10203f;--gold:#f0a81a;--bg:#f3f6fb;--line:#d9e1ee;--ok:#12805c;--bad:#c62f3b;--mut:#5c6b85}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--navy)}
+header{background:var(--navy);color:#fff;padding:14px 16px}
+header h1{margin:0;font-size:18px}
+header p{margin:2px 0 0;font-size:12px;opacity:.75}
+main{max-width:980px;margin:0 auto;padding:14px 16px 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:16px;margin:0 0 10px}
+label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;color:var(--navy)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+button{padding:11px 16px;border-radius:10px;border:0;background:var(--navy);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+button.g{background:var(--gold);color:var(--navy)}
+button.o{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+button.r{background:#fff;color:var(--bad);border:1px solid var(--bad)}
+button.sm{padding:6px 10px;font-size:12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{flex:1;background:#fff;color:var(--navy);border:1px solid var(--line)}
+.tabs button.on{background:var(--navy);color:#fff}
+.msg{padding:10px 12px;border-radius:10px;font-size:13px;margin:10px 0}
+.msg.e{background:#fdecee;color:var(--bad)}
+.msg.k{background:#e6f6ef;color:var(--ok)}
+.msg.i{background:#fff6dd;color:#7a5600}
+.meta{font-size:12px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut)}
+td.num,th.num{text-align:right;white-space:nowrap}
+.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}
+.scroll{overflow-x:auto}
+.sum{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.sum div{flex:1;min-width:90px;background:var(--bg);border-radius:10px;padding:8px 10px;text-align:center}
+.sum b{display:block;font-size:20px}
+.hide{display:none!important}
+#printHead{display:none}
+.slip{display:none}
+@media print{
+  body{background:#fff}
+  header,.noprint,.tabs{display:none!important}
+  main{padding:0;max-width:none}
+  .card{border:0;padding:0;margin:0}
+  #printHead{display:block;border-bottom:2px solid #000;margin-bottom:10px;padding-bottom:6px}
+  #printHead h1{margin:0;font-size:18px}
+  #printHead p{margin:2px 0;font-size:12px}
+  th.act,td.act{display:none}
+  th,td{border-bottom:1px solid #999;font-size:11px}
+  .sum div{border:1px solid #999;background:#fff}
+  body.slipmode #resWrap,body.slipmode #printHead{display:none!important}
+  body.slipmode .slip{display:block}
+}
+.slip{border:3px double var(--navy);padding:26px;max-width:640px;margin:20px auto;font-size:15px}
+.slip h2{text-align:center;font-size:20px;margin:0 0 4px}
+.slip .sub{text-align:center;font-size:12px;color:var(--mut);margin-bottom:16px}
+.slip table td{font-size:15px;padding:8px 4px}
+.slip .big{font-size:34px;font-weight:900;text-align:center;margin:14px 0 2px}
+.pho{position:fixed;inset:0;background:rgba(10,20,40,.8);z-index:50;display:flex;align-items:center;justify-content:center;padding:14px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Class Results</h1>
+  <label style="font-size:12px;margin-left:12px">WhatsApp message: <select id="waLang" style="padding:3px 6px"><option value="en">English</option><option value="fr">Français</option></select></label>
+  <p>Smart Academy International · lecturer view</p>
+</header>
+<main>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="card" id="boxA">
+    <h2>Admin — Class Results</h2>
+    <label>Admin key</label>
+    <input id="akey" type="password" autocomplete="off" data-lpignore="true" placeholder="admin key or admin password">
+    <div style="margin-top:12px"><button class="g" id="ago">Sign in</button></div>
+    <div id="amsg"></div>
+  </div>
+</div>
+
+<!-- ADMIN: classes -->
+<div id="admin" class="hide">
+  <div class="card">
+    <h2>Create a class</h2>
+    <label>Class name (as the lecturer will see it)</label>
+    <input id="cname" placeholder="Mathematics Grade 8 — 2026">
+    <div class="row">
+      <div><label>Keep results for</label>
+        <select id="cdays"><option value="30">30 days</option><option value="60">60 days</option><option value="90" selected>90 days</option><option value="180">180 days</option><option value="365">1 year</option></select></div>
+      <div><label>Test duration</label><select id="ctime"><option value="30">30 min</option><option value="45">45 min</option><option value="60">1 hour</option><option value="90">1h30</option><option value="120" selected>2 hours</option><option value="180">3 hours</option></select></div>
+      <div><label>Pass mark %</label><input id="cpass" type="number" min="1" max="100" value="50"></div>
+      
+    </div>
+    <label>Document for the test (PDF, Word or scan) — students are tested on this</label>
+    <input id="cdoc" type="file" accept=".pdf,.docx,.txt,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <div class="meta">Optional now: you can also add or replace it later with the Document button. Scanned PDFs work too (up to 20 pages, read once by AI).</div>
+    <div style="margin-top:12px"><button class="g" id="cgo">Create class</button></div>
+    <div id="cmsg"></div>
+  </div>
+  <div class="card">
+    <h2>Release a student-name lock</h2>
+    <div class="meta" style="margin-bottom:6px">One access code = one student name. If a student really changed (or a name was typed wrongly), release the code here, then the next name used becomes the new one.</div>
+    <div class="row"><input id="rcode" placeholder="Access code" autocapitalize="characters" autocomplete="off"><button id="rbtn" class="o">Release</button></div>
+    <div id="rmsg2"></div>
+  </div>
+  <div class="card">
+    <h2>Classes <button class="o sm" id="aref" style="float:right">Refresh</button></h2>
+    <div id="clist" class="meta">…</div>
+  </div>
+</div>
+
+<input id="cdoc2" type="file" accept=".pdf,.docx,.txt,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hide">
+
+<!-- RESULTS -->
+<div id="results" class="hide">
+  <div id="printHead">
+    <h1>Smart Academy International — Class results</h1>
+    <p id="phClass"></p>
+    <p id="phDate"></p>
+  </div>
+  <div class="card" id="resWrap">
+    <div class="noprint" style="margin-bottom:8px"><button class="o sm" id="back">← Back</button></div>
+    <h2 id="rtitle"></h2>
+    <div class="noprint" style="margin-bottom:6px"><button class="o sm" id="rcopy">Copy reference</button></div>
+    <div class="meta" id="rmeta"></div>
+    <div class="sum" id="rsum"></div>
+    <div class="row noprint" style="margin:10px 0">
+      <input id="rq" placeholder="Search name, subject…" style="flex:2">
+      <button class="g" id="rprint">🖨 Print list</button>
+      <button class="o" id="rcsv">⬇ CSV</button>
+      <button class="o" id="rrel">↻ Refresh</button>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>Name</th><th>Grade</th><th>Subject / document</th><th class="num">Mark</th><th class="num">%</th><th>Result</th><th>Date</th><th class="act noprint"></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div id="rempty" class="meta hide" style="padding:14px 0">No results yet. They appear here as soon as students finish the test with this class reference.</div>
+    <div class="noprint" style="margin-top:14px"><button class="r sm" id="rclear">Delete ALL results of this class</button></div>
+    <div id="rmsg" class="noprint"></div>
+  </div>
+  <div class="slip" id="slip"></div>
+  <div id="phbox" class="hide"></div>
+</div>
+</main>
+<script>
+var API = 'https://smartacademy-ai.kasongokimba.workers.dev';
+function $(i){ return document.getElementById(i); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+var auth = null;          // {ref, password} or {adminKey}
+var data = null;          // last class-view
+var rows = [];
+function msg(id, text, cls){ $(id).innerHTML = text ? '<div class="msg '+(cls||'e')+'">'+esc(text)+'</div>' : ''; }
+async function api(b){
+  try {
+    var r = await fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(b)});
+    return await r.json();
+  } catch(e){ return {ok:false, error:'No connection'}; }
+}
+function copyText(txt, btn){
+  function done(ok){ if(btn){ var o = btn.getAttribute('data-l') || btn.textContent; btn.setAttribute('data-l', o); btn.textContent = ok ? '✔ Copied' : 'Copy failed'; setTimeout(function(){ btn.textContent = o; }, 1500); } }
+  try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ fb(); }); return; } } catch(e){}
+  fb();
+  function fb(){ try { var t = document.createElement('textarea'); t.value = txt; t.style.cssText = 'position:fixed;left:0;top:0;opacity:0'; document.body.appendChild(t); t.focus(); t.select(); var ok = document.execCommand('copy'); t.remove(); done(ok); } catch(e){ done(false); } }
+}
+function waLang(){ var s=document.getElementById('waLang'); return s && s.value==='fr' ? 'fr' : 'en'; }
+function waMessage(c){
+  var base = 'https://www.smartacademy-ai.com/lecturer.html';
+  if (waLang()==='fr') return 'Smart Academy International — Accès enseignant\n\n'
+   + 'Classe : '+c.name+'\n'
+   + 'Votre code enseignant : '+c.lec+'\n'
+   + 'Référence de classe pour les élèves (à leur donner) : '+c.ref+'\n\n'
+   + '1) Ouvrez : '+base+'\n'
+   + '2) Entrez votre code d’accès (abonnement) et votre code enseignant.\n'
+   + '3) Téléversez vos notes de test (PDF, Word ou scan) et consultez les résultats de vos élèves.\n\n'
+   + 'Les élèves entrent la référence de classe dans l’application (Avec identité > Référence de classe) avant le test.';
+  return 'Smart Academy International — Lecturer access\n\n'
+   + 'Class: '+c.name+'\n'
+   + 'Your lecturer code: '+c.lec+'\n'
+   + 'Student class reference (give this to your students): '+c.ref+'\n\n'
+   + '1) Open: '+base+'\n'
+   + '2) Enter your subscription access code and your lecturer code.\n'
+   + '3) Upload your test notes (PDF, Word or scan) and see your students\' results there.\n\n'
+   + 'Students enter the class reference in the app (Avec identité > Class reference) before the test.';
+}
+function waOpen(c){ window.open('https://wa.me/?text='+encodeURIComponent(waMessage(c)), '_blank'); }
+function fmtMin(m){ return m>=60 ? (m%60 ? Math.floor(m/60)+'h'+(m%60) : (m/60)+'h') : m+' min'; }
+function fmtDate(ts){ var d = new Date(ts); function p(n){ return (n<10?'0':'')+n; } return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function show(which){ ['login','admin','results'].forEach(function(x){ $(x).classList.toggle('hide', x !== which); }); window.scrollTo(0,0); }
+
+// admin login
+$('ago').onclick = async function(){
+  var k = $('akey').value.trim(); if (!k) return msg('amsg','Enter the admin key.');
+  msg('amsg','Signing in…','i');
+  auth = {adminKey:k};
+  var j = await api({action:'class-list', adminKey:k});
+  if (!j.ok){ auth = null; return msg('amsg', j.error==='Unauthorized' ? 'Wrong admin key.' : (j.error||'Error')); }
+  msg('amsg','');
+  show('admin'); renderClasses(j.classes);
+};
+$('akey').addEventListener('keydown', function(e){ if (e.key==='Enter') $('ago').click(); });
+
+var classMap = {};
+function renderClasses(list){
+  classMap = {}; list.forEach(function(c){ classMap[c.ref] = c; });
+  if (!list.length){ $('clist').innerHTML = 'No classes yet. Create the first one above.'; return; }
+  $('clist').innerHTML = '<div class="scroll"><table><thead><tr><th>Ref</th><th>Lecturer code</th><th>Class</th><th>Document</th><th class="num">Results</th><th>Time</th><th>Keep</th><th class="num">Pass</th><th></th></tr></thead><tbody>'+
+    list.map(function(c){
+      if (c.unassigned) return '<tr style="background:#fff6dd"><td><b>—</b></td><td>—</td><td>'+esc(c.name)+'<br><span class="meta">kept 30 days · only you see this</span></td><td><span class="meta">—</span></td><td class="num">'+c.count+'</td><td>30 d</td><td class="num">—</td><td><button class="sm" data-open="UNASSIGNED">Open</button></td></tr>';
+      return '<tr><td><b>'+esc(c.ref)+'</b><br><button class="o sm" data-copy="'+esc(c.ref)+'">Copy</button></td><td>'+(c.lec?'<b>'+esc(c.lec)+'</b><br><button class="o sm" data-copy="'+esc(c.lec)+'">Copy</button> <button class="g sm" data-wa="'+esc(c.ref)+'">WhatsApp</button>':'<span class="meta">none</span>')+'</td><td>'+esc(c.name)+'</td><td>'+(c.docTitle?'✔ '+esc(c.docTitle):'<span class="meta">none</span>')+'</td><td class="num">'+c.count+'</td><td>'+fmtMin(c.testMin||120)+'</td><td>'+c.days+' d</td><td class="num">'+c.passMark+'%</td>'+
+        '<td style="white-space:nowrap"><button class="sm" data-open="'+esc(c.ref)+'">Open</button> <button class="o sm" data-doc="'+esc(c.ref)+'">Document</button> <button class="o sm" data-edit="'+esc(c.ref)+'" data-t="'+(c.testMin||120)+'" data-d="'+c.days+'" data-p="'+c.passMark+'">Edit</button> <button class="r sm" data-del="'+esc(c.ref)+'">Delete</button></td></tr>';
+    }).join('')+'</tbody></table></div>';
+}
+async function refreshClasses(){ var j = await api({action:'class-list', adminKey:auth.adminKey}); if (j.ok) renderClasses(j.classes); }
+$('aref').onclick = refreshClasses;
+$('rbtn').onclick = async function(){
+  var c = $('rcode').value.trim().toUpperCase(); if (!c) return msg('rmsg2','Enter the access code.');
+  var j = await api({action:'class-bind-release', adminKey:auth.adminKey, code:c});
+  msg('rmsg2', j.ok ? 'Name lock released for '+c+'.' : (j.error||'Error'), j.ok ? 'k' : 'e');
+};
+$('clist').addEventListener('click', async function(e){
+  var t = e.target; if (!t || t.tagName !== 'BUTTON') return;
+  if (t.dataset.open){ auth = {adminKey:auth.adminKey, ref:t.dataset.open}; await load(true); return; }
+  if (t.dataset.copy){ copyText(t.dataset.copy, t); return; }
+  if (t.dataset.wa){ var cc = classMap[t.dataset.wa]; if (cc && cc.lec) waOpen(cc); return; }
+  if (t.dataset.doc){ docTarget = t.dataset.doc; $('cdoc2').value = ''; $('cdoc2').click(); return; }
+  if (t.dataset.del){
+    if (!confirm('Delete class '+t.dataset.del+' and ALL its results? This cannot be undone.')) return;
+    var j = await api({action:'class-delete', adminKey:auth.adminKey, ref:t.dataset.del});
+    if (!j.ok) return msg('cmsg', j.error||'Error'); msg('cmsg','Class deleted ('+j.deleted+' results removed).','k'); refreshClasses(); return;
+  }
+  if (t.dataset.edit){
+    var ref = t.dataset.edit;
+    var d = prompt('Keep results for how many days? (1–365)', t.dataset.d); if (d === null) return;
+    var p = prompt('Pass mark % ?', t.dataset.p); if (p === null) return;
+    var tm = prompt('Test duration in minutes? (30, 45, 60, 90, 120 or 180)', t.dataset.t); if (tm === null) return;
+    var rg = confirm('Generate a NEW lecturer code for this class? (OK = new code, the old one stops working. Cancel = keep the current code.)');
+    var body = {action:'class-set', adminKey:auth.adminKey, ref:ref, days:d, passMark:p, testMin:tm, regenLec:rg}; 
+    var j2 = await api(body);
+    if (!j2.ok) return msg('cmsg', j2.error||'Error');
+    msg('cmsg','Updated '+ref+(j2.lecChanged?' — NEW lecturer code: '+j2.lec:'')+'. New retention applies to results sent from now on.','k'); refreshClasses();
+  }
+});
+var docTarget = null;
+function loadPdfJs(){
+  return new Promise(function(res){
+    if (window.pdfjsLib) return res(true);
+    var u = ['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'], i = 0;
+    (function next(){
+      if (i >= u.length) return res(false);
+      var s = document.createElement('script'); s.src = u[i++]; s.onload = function(){ try { pdfjsLib.GlobalWorkerOptions.workerSrc = s.src.replace('pdf.min.js','pdf.worker.min.js'); } catch(e){} res(!!window.pdfjsLib); }; s.onerror = next; document.head.appendChild(s);
+    })();
+  });
+}
+async function ocrPdf(doc){
+  var MAX = 20, n = Math.min(doc.numPages, MAX), shots = [];
+  if (doc.numPages > MAX) msg('cmsg','Scanned PDF with '+doc.numPages+' pages: only the first '+MAX+' pages will be read.','i');
+  for (var p = 1; p <= n; p++){
+    msg('cmsg','Scanned document — preparing page '+p+' of '+n+'…','i');
+    var pg = await doc.getPage(p), vp0 = pg.getViewport({scale:1}), sc = Math.min(2, 1500/Math.max(vp0.width, vp0.height)), vp = pg.getViewport({scale:sc});
+    var cv = document.createElement('canvas'); cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0,0,cv.width,cv.height);
+    await pg.render({canvasContext:cx, viewport:vp}).promise;
+    shots.push(cv.toDataURL('image/jpeg', 0.7));
+  }
+  var texts = [], ok = 0;
+  for (var i = 0; i < shots.length; i += 3){
+    msg('cmsg','Scanned document — reading pages '+(i+1)+'–'+Math.min(i+3,shots.length)+' of '+shots.length+' with AI…','i');
+    var j = null;
+    for (var tr = 0; tr < 2 && !(j && j.ok); tr++) j = await api({action:'class-ocr', adminKey:auth.adminKey, images:shots.slice(i,i+3)});
+    if (!j || !j.ok) throw new Error('Could not read the scan: '+((j&&j.error)||'error')+' (pages '+(i+1)+'–'+Math.min(i+3,shots.length)+')');
+    texts.push(j.text); ok++;
+  }
+  var all = texts.join('\n\n').replace(/\[unreadable page\]/g,'').trim();
+  var bad = (texts.join(' ').match(/\[unreadable page\]/g)||[]).length;
+  if (all.replace(/\s/g,'').length < 400) throw new Error('The scan could not be read (too little text found). Try a clearer scan or photo.');
+  lastOcrNote = ' Scanned pages read: '+n+(bad?' ('+bad+' unreadable)':'')+', text found: '+all.length+' characters. Check the text looks right.';
+  return all;
+}
+var lastOcrNote = '';
+async function readDoc(f){
+  lastOcrNote = '';
+  if (f.size > 18*1024*1024) throw new Error('File is larger than 18 MB.');
+  if (/\.txt$/i.test(f.name) || f.type === 'text/plain') return await f.text();
+  if (/\.docx$/i.test(f.name)){
+    if (!window.mammoth){ await new Promise(function(res){ var u=['https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js'],i=0; (function n(){ if(i>=u.length) return res(); var s=document.createElement('script'); s.src=u[i++]; s.onload=function(){res();}; s.onerror=n; document.head.appendChild(s); })(); }); }
+    if (!window.mammoth) throw new Error('Could not load the Word reader (check internet).');
+    var rr = await mammoth.extractRawText({arrayBuffer: await f.arrayBuffer()}); var wt = String(rr.value||'');
+    if (wt.replace(/\s/g,'').length < 400) throw new Error('This Word file has too little text (at least 400 characters). If it only contains pictures, save it as PDF and upload that.');
+    return wt;
+  }
+  if (/\.doc$/i.test(f.name)) throw new Error('Old .doc files are not supported. Open it in Word and save as .docx or PDF.');
+  var bytes = new Uint8Array(await f.arrayBuffer());
+  if (String.fromCharCode(bytes[0],bytes[1],bytes[2],bytes[3]) !== '%PDF') throw new Error('This file is not a PDF, Word (.docx) or .txt.');
+  if (!(await loadPdfJs())) throw new Error('Could not load the PDF reader (check internet).');
+  var doc = await pdfjsLib.getDocument({ data: bytes }).promise, out = [];
+  for (var p = 1; p <= doc.numPages; p++){
+    var pg = await doc.getPage(p), tc = await pg.getTextContent(), line = '', parts = [];
+    tc.items.forEach(function(it){ line += it.str; if (it.hasEOL){ parts.push(line); line = ''; } else if (it.str) line += ' '; });
+    if (line) parts.push(line); out.push(parts.join('\n'));
+  }
+  var text = out.join('\n\n');
+  if (text.replace(/\s/g,'').length < 400) return await ocrPdf(doc);
+  return text;
+}
+async function uploadDoc(ref, f){
+  var text = await readDoc(f);
+  var j = await api({action:'class-doc-set', adminKey:auth.adminKey, ref:ref, title:f.name.replace(/\.(pdf|txt)$/i,'').replace(/[_-]+/g,' ').trim(), text:text});
+  if (!j.ok) throw new Error(j.error||'Error');
+  return j;
+}
+$('cdoc2').onchange = async function(){
+  var f = this.files[0]; if (!f || !docTarget) return;
+  msg('cmsg','Reading '+f.name+'…','i');
+  try { var j = await uploadDoc(docTarget, f); msg('cmsg','Document saved for '+docTarget+': “'+j.title+'” ('+j.chars+' characters'+(j.chars>=60000?', cut at 60 000':'')+').'+lastOcrNote,'k'); refreshClasses(); }
+  catch(e){ msg('cmsg', e.message); }
+};
+$('cmsg').addEventListener('click', function(e){ var t = e.target; if (t && t.dataset && t.dataset.copy) copyText(t.dataset.copy, t); });
+$('cgo').onclick = async function(){
+  var name = $('cname').value.trim(); if (!name) return msg('cmsg','Enter a class name.');
+  msg('cmsg','Creating…','i');
+  var j = await api({action:'class-create', adminKey:auth.adminKey, name:name, days:$('cdays').value, testMin:$('ctime').value, passMark:$('cpass').value});
+  if (!j.ok) return msg('cmsg', j.error||'Error');
+  $('cmsg').innerHTML = '<div class="msg k"><b>Class created.</b><br>Class reference for students: <b style="font-size:18px">'+esc(j.ref)+'</b> <button class="o sm" data-copy="'+esc(j.ref)+'">Copy</button><br>Lecturer code: <b style="font-size:18px">'+esc(j.lec)+'</b> <button class="o sm" data-copy="'+esc(j.lec)+'">Copy</button> <button class="g sm" id="waNew">Send via WhatsApp</button><br><span class="meta">Give the lecturer the code (and the page <b>lecturer.html</b>). The lecturer also needs a valid subscription access code. Students use the class reference.</span></div>';
+  var newC = {ref:j.ref, lec:j.lec, name:j.name}; $('waNew').onclick = function(){ waOpen(newC); };
+  var f = $('cdoc').files[0];
+  if (f){
+    try { var d = await uploadDoc(j.ref, f); $('cmsg').insertAdjacentHTML('beforeend','<div class="msg k">Document saved: “'+esc(d.title)+'” ('+d.chars+' characters).'+esc(lastOcrNote)+'</div>'); }
+    catch(e){ $('cmsg').insertAdjacentHTML('beforeend','<div class="msg e">Class created, but the document was not saved: '+esc(e.message)+' — use the Document button.</div>'); }
+  }
+  $('cname').value=''; $('cdoc').value=''; refreshClasses();
+};
+
+// results
+async function load(fromAdmin){
+  var body = {action:'class-view', ref:auth.ref};
+  if (auth.adminKey) body.adminKey = auth.adminKey; else body.password = auth.password;
+  var j = await api(body);
+  if (!j.ok){ if (fromAdmin) msg('cmsg', j.error||'Error'); else msg('lmsg', j.error||'Error'); return false; }
+  data = j; rows = j.results || [];
+  window._fromAdmin = !!auth.adminKey;
+  render(); show('results'); return true;
+}
+function render(){
+  var q = $('rq').value.trim().toLowerCase();
+  var list = rows.filter(function(r){ return !q || (r.n+' '+(r.sb||'')+' '+(r.dn||'')+' '+(r.lv||'')).toLowerCase().indexOf(q) >= 0; });
+  $('rtitle').textContent = data.name + ' · ' + data.ref;
+  $('phClass').textContent = data.name + ' · Reference ' + data.ref + ' · Pass mark ' + data.passMark + '%';
+  $('phDate').textContent = 'Printed ' + fmtDate(Date.now());
+  $('rmeta').textContent = 'Pass mark '+data.passMark+'% · results are kept '+data.days+' days then removed automatically';
+  var n = rows.length, passed = rows.filter(function(r){ return r.ok; }).length;
+  var avg = n ? Math.round(rows.reduce(function(a,r){ return a + r.p; },0)/n) : 0;
+  $('rsum').innerHTML = '<div><b>'+n+'</b>Students</div><div><b>'+passed+'</b>Passed</div><div><b>'+(n-passed)+'</b>Failed</div><div><b>'+avg+'%</b>Average</div>';
+  $('rempty').classList.toggle('hide', !!n);
+  $('rows').innerHTML = list.map(function(r,i){
+    return '<tr><td>'+(i+1)+'</td><td><b>'+esc(r.n)+'</b></td><td>'+esc(r.lv||'')+'</td><td>'+esc(r.dn||r.sb||'')+(r.rn?'<br><span class="meta">'+esc(r.rn)+'</span>':'')+(r.ref?'<br><span class="meta">Ref '+esc(r.ref)+'</span>':'')+'</td>'+
+      '<td class="num">'+r.c+' / '+r.t+'</td><td class="num"><b>'+r.p+'%</b></td><td class="'+(r.ok?'pass':'fail')+'">'+(r.ok?'PASS':'FAIL')+'</td><td>'+esc(fmtDate(r.ts))+'</td>'+
+      '<td class="act noprint" style="white-space:nowrap">'+((r.ph||r.ph2)?'<button class="o sm" data-ph="'+esc(r.id)+'">📷</button> ':'')+'<button class="o sm" data-slip="'+esc(r.id)+'">🖨</button> <button class="r sm" data-rm="'+esc(r.id)+'">Delete</button></td></tr>';
+  }).join('');
+}
+$('rq').addEventListener('input', render);
+$('rcopy').onclick = function(){ if (data) copyText(data.ref, this); };
+$('back').onclick = function(){ if (auth && auth.adminKey){ show('admin'); refreshClasses(); } else { show('login'); } };
+$('rrel').onclick = function(){ load(!!auth.adminKey); };
+$('rprint').onclick = function(){ document.body.classList.remove('slipmode'); window.print(); };
+$('rcsv').onclick = function(){
+  var lines = [['Name','Grade','Subject','Document','Report no','Marks','Out of','Percent','Result','Date']];
+  rows.forEach(function(r){ lines.push([r.n,r.lv||'',r.sb||'',r.dn||'',r.rn||'',r.c,r.t,r.p,r.ok?'PASS':'FAIL',fmtDate(r.ts)]); });
+  var csv = lines.map(function(l){ return l.map(function(v){ v = String(v); return /[",\n;]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }).join(','); }).join('\r\n');
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'})); a.download = data.ref+'-results.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){ a.remove(); }, 500);
+};
+$('rows').addEventListener('click', async function(e){
+  var t = e.target; if (!t || t.tagName !== 'BUTTON') return;
+  if (t.dataset.rm){
+    var r = rows.filter(function(x){ return x.id === t.dataset.rm; })[0];
+    if (!confirm('Delete the result of '+(r?r.n:'this student')+'?')) return;
+    var body = {action:'class-delete-result', ref:data.ref, id:t.dataset.rm}; if (auth.adminKey) body.adminKey = auth.adminKey; else body.password = auth.password;
+    var j = await api(body); if (!j.ok) return msg('rmsg', j.error||'Error');
+    rows = rows.filter(function(x){ return x.id !== t.dataset.rm; }); render(); msg('rmsg','Deleted.','k'); return;
+  }
+  if (t.dataset.ph){
+    var pr = rows.filter(function(x){ return x.id === t.dataset.ph; })[0];
+    var jj = await api({action:'class-photo', ref:data.ref, id:t.dataset.ph, adminKey:auth.adminKey});
+    if (!jj.ok || (!jj.photo && !jj.photo2)) return msg('rmsg','No photo for this result.');
+    function pf(u,cap){ return u ? '<div style="flex:1;min-width:140px"><img src="'+u+'" style="width:100%;border-radius:10px;transform:scaleX(-1)"><div class="meta" style="margin-top:4px">'+cap+'</div></div>' : '<div style="flex:1;min-width:140px;padding:30px 6px;background:#f3f6fb;border-radius:10px" class="meta">'+cap+'<br>— none —</div>'; }
+    $('phbox').innerHTML = '<div style="background:#fff;border-radius:14px;padding:14px;max-width:520px;width:100%;text-align:center"><div style="display:flex;gap:10px;flex-wrap:wrap">'+pf(jj.photo,'Before the test (taken by the student)')+pf(jj.photo2,'During the test (automatic)')+'</div><div style="margin:8px 0"><b>'+esc(pr?pr.n:'')+'</b></div><button id="phx">Close</button></div>';
+    $('phbox').className = 'pho'; $('phx').onclick = function(){ $('phbox').className = 'hide'; $('phbox').innerHTML = ''; }; return;
+  }
+  if (t.dataset.slip){
+    var s = rows.filter(function(x){ return x.id === t.dataset.slip; })[0]; if (!s) return;
+    $('slip').innerHTML = '<h2>Smart Academy International</h2><div class="sub">Test result slip · '+esc(data.name)+' · '+esc(data.ref)+'</div>'+
+      '<table><tr><td>Student</td><td><b>'+esc(s.n)+'</b></td></tr><tr><td>Grade / level</td><td>'+esc(s.lv||'—')+'</td></tr><tr><td>Subject</td><td>'+esc(s.sb||'—')+'</td></tr><tr><td>Document</td><td>'+esc(s.dn||'—')+'</td></tr><tr><td>Date</td><td>'+esc(fmtDate(s.ts))+'</td></tr></table>'+
+      '<div class="big">'+s.p+'%</div><div style="text-align:center">'+s.c+' / '+s.t+' correct · <b class="'+(s.ok?'pass':'fail')+'">'+(s.ok?'PASS':'FAIL')+'</b> (pass mark '+data.passMark+'%)</div>'+
+      '<div style="margin-top:34px;display:flex;justify-content:space-between;font-size:12px;color:#444"><span>Lecturer signature: ______________</span><span>Printed '+esc(fmtDate(Date.now()))+'</span></div>';
+    (async function(){
+      var ph = '';
+      if (s.ph || s.ph2){ var q = await api({action:'class-photo', ref:data.ref, id:s.id, adminKey:auth.adminKey}); if (q.ok && (q.photo || q.photo2)) ph = '<div style="text-align:center;margin:10px 0">'+(q.photo?'<img src="'+q.photo+'" style="width:110px;border-radius:8px;transform:scaleX(-1);margin:0 4px">':'')+(q.photo2?'<img src="'+q.photo2+'" style="width:110px;border-radius:8px;transform:scaleX(-1);margin:0 4px">':'')+'</div>'; }
+      if (ph) $('slip').innerHTML = $('slip').innerHTML.replace('<table>', ph+'<table>');
+      if (s.rn) $('slip').innerHTML += '<div style="margin-top:10px;font-size:12px;color:#444;text-align:center">Report no. '+esc(s.rn)+' · verify at smartacademy-ai.com/courses.html</div>';
+      document.body.classList.add('slipmode'); window.print();
+    })(); return; setTimeout(function(){ document.body.classList.remove('slipmode'); }, 500);
+  }
+});
+$('rclear').onclick = async function(){
+  if (!rows.length) return msg('rmsg','Nothing to delete.','i');
+  if (!confirm('Delete ALL '+rows.length+' results of '+data.ref+'? This cannot be undone. (Tip: print or download the CSV first.)')) return;
+  var body = {action:'class-clear', ref:data.ref}; if (auth.adminKey) body.adminKey = auth.adminKey; else body.password = auth.password;
+  var j = await api(body); if (!j.ok) return msg('rmsg', j.error||'Error');
+  rows = []; render(); msg('rmsg','All results deleted ('+j.deleted+').','k');
+};
+window.addEventListener('afterprint', function(){ document.body.classList.remove('slipmode'); });
+</script>
+</body>
+</html>

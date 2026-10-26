@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Lecturer — Smart Academy International</title>
+<style>
+:root{--navy:#10203f;--gold:#f0a81a;--bg:#f3f6fb;--line:#d9e1ee;--ok:#12805c;--bad:#c62f3b;--mut:#5c6b85}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--navy)}
+header{background:var(--navy);color:#fff;padding:14px 16px}
+header h1{margin:0;font-size:18px}
+header p{margin:2px 0 0;font-size:12px;opacity:.75}
+main{max-width:980px;margin:0 auto;padding:14px 16px 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:16px;margin:0 0 10px}
+label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;color:var(--navy)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+button{padding:11px 16px;border-radius:10px;border:0;background:var(--navy);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+button.g{background:var(--gold);color:var(--navy)}
+button.o{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+button.r{background:#fff;color:var(--bad);border:1px solid var(--bad)}
+button.sm{padding:6px 10px;font-size:12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{flex:1;background:#fff;color:var(--navy);border:1px solid var(--line)}
+.tabs button.on{background:var(--navy);color:#fff}
+.msg{padding:10px 12px;border-radius:10px;font-size:13px;margin:10px 0}
+.msg.e{background:#fdecee;color:var(--bad)}
+.msg.k{background:#e6f6ef;color:var(--ok)}
+.msg.i{background:#fff6dd;color:#7a5600}
+.meta{font-size:12px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut)}
+td.num,th.num{text-align:right;white-space:nowrap}
+.pass{color:var(--ok);font-weight:800}.fail{color:var(--bad);font-weight:800}
+.scroll{overflow-x:auto}
+.sum{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.sum div{flex:1;min-width:90px;background:var(--bg);border-radius:10px;padding:8px 10px;text-align:center}
+.sum b{display:block;font-size:20px}
+.hide{display:none!important}
+#printHead{display:none}
+.slip{display:none}
+@media print{
+  body{background:#fff}
+  header,.noprint,.tabs{display:none!important}
+  main{padding:0;max-width:none}
+  .card{border:0;padding:0;margin:0}
+  #printHead{display:block;border-bottom:2px solid #000;margin-bottom:10px;padding-bottom:6px}
+  #printHead h1{margin:0;font-size:18px}
+  #printHead p{margin:2px 0;font-size:12px}
+  th.act,td.act{display:none}
+  th,td{border-bottom:1px solid #999;font-size:11px}
+  .sum div{border:1px solid #999;background:#fff}
+  body.slipmode #resWrap,body.slipmode #printHead{display:none!important}
+  body.slipmode .slip{display:block}
+}
+.slip{border:3px double var(--navy);padding:26px;max-width:640px;margin:20px auto;font-size:15px}
+.slip h2{text-align:center;font-size:20px;margin:0 0 4px}
+.slip .sub{text-align:center;font-size:12px;color:var(--mut);margin-bottom:16px}
+.slip table td{font-size:15px;padding:8px 4px}
+.slip .big{font-size:34px;font-weight:900;text-align:center;margin:14px 0 2px}
+.pho{position:fixed;inset:0;background:rgba(10,20,40,.8);z-index:50;display:flex;align-items:center;justify-content:center;padding:14px}
+</style>
+</head>
+<body>
+<header>
+  <div style="float:right"><button class="sm" id="lEN" style="background:#f0a81a;color:#10203f;margin-right:4px" onclick="setLang('en')">EN</button><button class="sm" id="lFR" style="background:#fff;color:#10203f" onclick="setLang('fr')">FR</button></div>
+  <h1>Lecturer</h1>
+  <p>Smart Academy International · notes and class results</p>
+</header>
+<main>
+<div id="login">
+  <div class="card">
+    <h2>Open my class</h2>
+    <label>Your subscription access code</label>
+    <input id="lacc" autocomplete="off" autocapitalize="characters" placeholder="filled in automatically if the app is on this phone">
+    <label>Lecturer code (from Smart Academy)</label>
+    <input id="llec" autocomplete="off" autocapitalize="characters" placeholder="LEC-4K7M2">
+    <div style="margin-top:12px"><button class="g" id="lgo">Open</button></div>
+    <div id="lmsg"></div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)" class="meta">No lecturer code yet?
+      <a href="https://wa.me/27761328664?text=Hello%2C%20I%20am%20a%20lecturer%20and%20I%20would%20like%20a%20class%20code%20for%20Smart%20Academy%20International." target="_blank" rel="noopener" style="color:#12805c;font-weight:800">💬 Contact us on WhatsApp</a></div>
+  </div>
+</div>
+<!-- RESULTS -->
+<div id="results" class="hide">
+  <div id="printHead">
+    <h1>Smart Academy International — Class results</h1>
+    <p id="phClass"></p>
+    <p id="phDate"></p>
+  </div>
+  <div class="card" id="resWrap">
+    <div class="noprint" style="margin-bottom:8px"><button class="o sm" id="back">← Back</button></div>
+    <h2 id="rtitle"></h2>
+    <div class="noprint" style="margin:8px 0 12px;padding:14px;border:2px solid var(--gold);border-radius:14px;background:#fffaf0;text-align:center">
+      <div class="meta" style="font-weight:700;text-transform:uppercase;letter-spacing:1px">Class reference for your students</div>
+      <div id="refbig" style="font-family:monospace;font-size:30px;font-weight:900;letter-spacing:3px;margin:6px 0"></div>
+      <div class="row" style="justify-content:center">
+        <button class="g" id="rcopy">📋 Copy reference</button>
+        <button class="o" id="rcopymsg">📋 Copy message for students</button>
+        <button class="o" id="rwa">💬 Share on WhatsApp</button>
+      </div>
+      <div class="meta" style="margin-top:6px">Students type this reference in the app (Avec identité → Class reference) before the test.</div>
+    </div>
+    <div class="noprint" style="background:var(--bg);border-radius:12px;padding:12px;margin:8px 0 12px">
+      <b>Test notes</b>
+      <div id="dcur" class="meta" style="margin:6px 0"></div>
+      <button class="g sm" id="dgo">Upload or replace notes (PDF, Word, scan)</button>
+      <input id="dfile" type="file" accept=".pdf,.docx,.txt,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hide">
+      <div id="dmsg"></div>
+      <div class="meta" style="margin-top:6px">Students are tested only on these notes. Scanned PDFs are read once by AI (first 20 pages).</div>
+    </div>
+    <div class="meta" id="rmeta"></div>
+    <div class="sum" id="rsum"></div>
+    <div class="row noprint" style="margin:10px 0">
+      <input id="rq" placeholder="Search name, subject…" style="flex:2">
+      <button class="g" id="rprint">🖨 Print list</button>
+      <button class="o" id="rcsv">⬇ CSV</button>
+      <button class="o" id="rrel">↻ Refresh</button>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>Name</th><th>Grade</th><th>Subject / document</th><th class="num">Mark</th><th class="num">%</th><th>Result</th><th>Date</th><th class="act noprint"></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div id="rempty" class="meta hide" style="padding:14px 0">No results yet. They appear here as soon as students finish the test with this class reference.</div>
+    <div class="noprint" style="margin-top:14px"><button class="r sm" id="rclear">Delete ALL results of this class</button></div>
+    <div id="rmsg" class="noprint"></div>
+  </div>
+  <div class="slip" id="slip"></div>
+  <div id="phbox" class="hide"></div>
+</div>
+
+</main>
+<script>
+var API = 'https://smartacademy-ai.kasongokimba.workers.dev';
+var LANG = 'en';
+try { var _sl = localStorage.getItem('sa_lang'); LANG = (_sl === 'fr' || (!_sl && /^fr/i.test(navigator.language||''))) ? 'fr' : 'en'; } catch(e){}
+function L(en, fr){ return LANG === 'fr' ? fr : en; }
+var FR = {
+ 'Lecturer':'Enseignant','Smart Academy International · notes and class results':'Smart Academy International · notes et résultats de classe',
+ 'Open my class':'Ouvrir ma classe','Your subscription access code':'Votre code d’accès (abonnement)',
+ 'Lecturer code (from Smart Academy)':'Code enseignant (fourni par Smart Academy)','Open':'Ouvrir',
+ 'No lecturer code yet?':'Pas encore de code enseignant ?','💬 Contact us on WhatsApp':'💬 Contactez-nous sur WhatsApp',
+ '← Back':'← Retour','Class reference for your students':'Référence de classe pour vos élèves',
+ '📋 Copy reference':'📋 Copier la référence','📋 Copy message for students':'📋 Copier le message pour les élèves','💬 Share on WhatsApp':'💬 Partager sur WhatsApp',
+ 'Test notes':'Notes du test','Upload or replace notes (PDF, Word, scan)':'Téléverser ou remplacer les notes (PDF, Word, scan)',
+ 'Students':'Élèves','Passed':'Réussis','Failed':'Échoués','Average':'Moyenne',
+ '🖨 Print list':'🖨 Imprimer la liste','⬇ CSV':'⬇ CSV','↻ Refresh':'↻ Actualiser',
+ 'Name':'Nom','Grade':'Classe','Subject / document':'Matière / document','Mark':'Note','Result':'Résultat','Date':'Date',
+ 'Delete ALL results of this class':'Supprimer TOUS les résultats de cette classe',
+ 'No results yet. They appear here as soon as students finish the test with this class reference.':'Aucun résultat pour l’instant. Ils apparaissent ici dès que les élèves terminent le test avec cette référence de classe.',
+ 'Smart Academy International — Class results':'Smart Academy International — Résultats de classe',
+ 'Students are tested only on these notes. Scanned PDFs are read once by AI (first 20 pages).':'Les élèves sont testés uniquement sur ces notes. Les PDF scannés sont lus une seule fois par l’IA (20 premières pages).',
+ 'Delete':'Supprimer','Close':'Fermer','Copy':'Copier'
+};
+var FR_PH = {'filled in automatically if the app is on this phone':'rempli automatiquement si l’application est sur ce téléphone','Search name, subject…':'Rechercher nom, matière…'};
+function trStatic(){
+  if (LANG !== 'fr') return;
+  var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n, list = [];
+  while ((n = w.nextNode())) list.push(n);
+  list.forEach(function(nd){ var s = nd.nodeValue.trim(); if (s && FR[s]) nd.nodeValue = nd.nodeValue.replace(s, FR[s]); });
+  document.querySelectorAll('[placeholder]').forEach(function(e){ var p = e.getAttribute('placeholder'); if (FR_PH[p]) e.setAttribute('placeholder', FR_PH[p]); });
+  document.querySelectorAll('.meta').forEach(function(e){
+    var h = e.innerHTML;
+    h = h.replace('Give this reference to your students.','Donnez cette référence à vos élèves.')
+         .replace('Students type this reference in the app (Avec identité → Class reference) before the test.','Les élèves saisissent cette référence dans l’application (Avec identité → Class reference) avant le test.');
+    if (h !== e.innerHTML) e.innerHTML = h;
+  });
+  document.title = 'Enseignant — Smart Academy International';
+  document.querySelectorAll('a[href*="wa.me/27761328664"]').forEach(function(a){ a.href = 'https://wa.me/27761328664?text=' + encodeURIComponent('Bonjour, je suis enseignant et je voudrais un code de classe pour Smart Academy International.'); });
+}
+var ERR_FR = {
+ 'File is larger than 18 MB.':'Le fichier dépasse 18 Mo.',
+ 'Could not load the Word reader (check internet).':'Impossible de charger le lecteur Word (vérifiez internet).',
+ 'Old .doc files are not supported. Open it in Word and save as .docx or PDF.':'Les anciens fichiers .doc ne sont pas pris en charge. Ouvrez-le dans Word et enregistrez en .docx ou PDF.',
+ 'This file is not a PDF, Word (.docx) or .txt.':'Ce fichier n’est pas un PDF, un Word (.docx) ou un .txt.',
+ 'Could not load the PDF reader (check internet).':'Impossible de charger le lecteur PDF (vérifiez internet).',
+ 'The scan could not be read (too little text found). Try a clearer scan or photo.':'Le scan n’a pas pu être lu (trop peu de texte trouvé). Essayez un scan ou une photo plus nette.',
+ 'The document has too little text (at least 400 characters).':'Le document contient trop peu de texte (au moins 400 caractères).',
+ 'Scan limit reached for today. Try again tomorrow.':'Limite de scans atteinte pour aujourd’hui. Réessayez demain.',
+ 'No connection':'Pas de connexion','Unauthorized':'Non autorisé'
+};
+function trErr(m){
+  if (LANG !== 'fr') return m;
+  if (ERR_FR[m]) return ERR_FR[m];
+  if (/^This Word file has too little text/.test(m)) return 'Ce fichier Word contient trop peu de texte (au moins 400 caractères). S’il ne contient que des images, enregistrez-le en PDF et téléversez le PDF.';
+  if (/^Could not read the scan/.test(m)) return 'Impossible de lire le scan : '+m.replace(/^Could not read the scan: /,'').replace(' (pages ',' (pages ');
+  return m;
+}
+function setLang(x){ try { localStorage.setItem('sa_lang', x); } catch(e){} location.reload(); }
+
+function $(i){ return document.getElementById(i); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+var auth = null;          // {lec, accessCode}
+var data = null;          // last class-view
+var rows = [];
+function msg(id, text, cls){ $(id).innerHTML = text ? '<div class="msg '+(cls||'e')+'">'+esc(text)+'</div>' : ''; }
+async function api(b){
+  try {
+    var r = await fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(b)});
+    return await r.json();
+  } catch(e){ return {ok:false, error:'No connection'}; }
+}
+function copyText(txt, btn){
+  function done(ok){ if(btn){ var o = btn.getAttribute('data-l') || btn.textContent; btn.setAttribute('data-l', o); btn.textContent = ok ? L('✔ Copied','✔ Copié') : L('Copy failed','Échec de la copie'); setTimeout(function(){ btn.textContent = o; }, 1500); } }
+  try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ fb(); }); return; } } catch(e){}
+  fb();
+  function fb(){ try { var t = document.createElement('textarea'); t.value = txt; t.style.cssText = 'position:fixed;left:0;top:0;opacity:0'; document.body.appendChild(t); t.focus(); t.select(); var ok = document.execCommand('copy'); t.remove(); done(ok); } catch(e){ done(false); } }
+}
+function fmtMin(m){ return m>=60 ? (m%60 ? Math.floor(m/60)+'h'+(m%60) : (m/60)+'h') : m+' min'; }
+function fmtDate(ts){ var d = new Date(ts); function p(n){ return (n<10?'0':'')+n; } return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function loadPdfJs(){
+  return new Promise(function(res){
+    if (window.pdfjsLib) return res(true);
+    var u = ['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'], i = 0;
+    (function next(){
+      if (i >= u.length) return res(false);
+      var s = document.createElement('script'); s.src = u[i++]; s.onload = function(){ try { pdfjsLib.GlobalWorkerOptions.workerSrc = s.src.replace('pdf.min.js','pdf.worker.min.js'); } catch(e){} res(!!window.pdfjsLib); }; s.onerror = next; document.head.appendChild(s);
+    })();
+  });
+}
+async function ocrPdf(doc){
+  var MAX = 20, n = Math.min(doc.numPages, MAX), shots = [];
+  if (doc.numPages > MAX) msg('dmsg',L('Scanned PDF with '+doc.numPages+' pages: only the first '+MAX+' pages will be read.','PDF scanné de '+doc.numPages+' pages : seules les '+MAX+' premières pages seront lues.'),'i');
+  for (var p = 1; p <= n; p++){
+    msg('dmsg',L('Scanned document — preparing page '+p+' of '+n+'…','Document scanné — préparation de la page '+p+' sur '+n+'…'),'i');
+    var pg = await doc.getPage(p), vp0 = pg.getViewport({scale:1}), sc = Math.min(2, 1500/Math.max(vp0.width, vp0.height)), vp = pg.getViewport({scale:sc});
+    var cv = document.createElement('canvas'); cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+    var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0,0,cv.width,cv.height);
+    await pg.render({canvasContext:cx, viewport:vp}).promise;
+    shots.push(cv.toDataURL('image/jpeg', 0.7));
+  }
+  var texts = [], ok = 0;
+  for (var i = 0; i < shots.length; i += 3){
+    msg('dmsg',L('Scanned document — reading pages '+(i+1)+'–'+Math.min(i+3,shots.length)+' of '+shots.length+' with AI…','Document scanné — lecture des pages '+(i+1)+'–'+Math.min(i+3,shots.length)+' sur '+shots.length+' par l’IA…'),'i');
+    var j = null;
+    for (var tr = 0; tr < 2 && !(j && j.ok); tr++) j = await api({action:'class-ocr', accessCode:auth.accessCode, lec:auth.lec, images:shots.slice(i,i+3)});
+    if (!j || !j.ok) throw new Error('Could not read the scan: '+((j&&j.error)||'error')+' (pages '+(i+1)+'–'+Math.min(i+3,shots.length)+')');
+    texts.push(j.text); ok++;
+  }
+  var all = texts.join('\n\n').replace(/\[unreadable page\]/g,'').trim();
+  var bad = (texts.join(' ').match(/\[unreadable page\]/g)||[]).length;
+  if (all.replace(/\s/g,'').length < 400) throw new Error('The scan could not be read (too little text found). Try a clearer scan or photo.');
+  lastOcrNote = L(' Scanned pages read: '+n+(bad?' ('+bad+' unreadable)':'')+', text found: '+all.length+' characters. Check the text looks right.',' Pages scannées lues : '+n+(bad?' ('+bad+' illisibles)':'')+', texte trouvé : '+all.length+' caractères. Vérifiez que le texte est correct.');
+  return all;
+}
+var lastOcrNote = '';
+async function readDoc(f){
+  lastOcrNote = '';
+  if (f.size > 18*1024*1024) throw new Error('File is larger than 18 MB.');
+  if (/\.txt$/i.test(f.name) || f.type === 'text/plain') return await f.text();
+  if (/\.docx$/i.test(f.name)){
+    if (!window.mammoth){ await new Promise(function(res){ var u=['https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js'],i=0; (function n(){ if(i>=u.length) return res(); var s=document.createElement('script'); s.src=u[i++]; s.onload=function(){res();}; s.onerror=n; document.head.appendChild(s); })(); }); }
+    if (!window.mammoth) throw new Error('Could not load the Word reader (check internet).');
+    var rr = await mammoth.extractRawText({arrayBuffer: await f.arrayBuffer()}); var wt = String(rr.value||'');
+    if (wt.replace(/\s/g,'').length < 400) throw new Error('This Word file has too little text (at least 400 characters). If it only contains pictures, save it as PDF and upload that.');
+    return wt;
+  }
+  if (/\.doc$/i.test(f.name)) throw new Error('Old .doc files are not supported. Open it in Word and save as .docx or PDF.');
+  var bytes = new Uint8Array(await f.arrayBuffer());
+  if (String.fromCharCode(bytes[0],bytes[1],bytes[2],bytes[3]) !== '%PDF') throw new Error('This file is not a PDF, Word (.docx) or .txt.');
+  if (!(await loadPdfJs())) throw new Error('Could not load the PDF reader (check internet).');
+  var doc = await pdfjsLib.getDocument({ data: bytes }).promise, out = [];
+  for (var p = 1; p <= doc.numPages; p++){
+    var pg = await doc.getPage(p), tc = await pg.getTextContent(), line = '', parts = [];
+    tc.items.forEach(function(it){ line += it.str; if (it.hasEOL){ parts.push(line); line = ''; } else if (it.str) line += ' '; });
+    if (line) parts.push(line); out.push(parts.join('\n'));
+  }
+  var text = out.join('\n\n');
+  if (text.replace(/\s/g,'').length < 400) return await ocrPdf(doc);
+  return text;
+}
+function render(){
+  var q = $('rq').value.trim().toLowerCase();
+  var list = rows.filter(function(r){ return !q || (r.n+' '+(r.sb||'')+' '+(r.dn||'')+' '+(r.lv||'')).toLowerCase().indexOf(q) >= 0; });
+  $('rtitle').textContent = data.name + ' · ' + data.ref; $('refbig').textContent = data.ref;
+  $('phClass').textContent = data.name + ' · ' + L('Reference ','Référence ') + data.ref + ' · ' + L('Pass mark ','Seuil de réussite ') + data.passMark + '%';
+  $('phDate').textContent = L('Printed ','Imprimé le ') + fmtDate(Date.now());
+  $('rmeta').textContent = L('Pass mark '+data.passMark+'% · test time '+fmtMin(data.testMin||120)+' · results are kept '+data.days+' days then removed automatically','Seuil de réussite '+data.passMark+'% · durée du test '+fmtMin(data.testMin||120)+' · les résultats sont conservés '+data.days+' jours puis supprimés automatiquement');
+  var n = rows.length, passed = rows.filter(function(r){ return r.ok; }).length;
+  var avg = n ? Math.round(rows.reduce(function(a,r){ return a + r.p; },0)/n) : 0;
+  $('rsum').innerHTML = '<div><b>'+n+'</b>'+L('Students','Élèves')+'</div><div><b>'+passed+'</b>'+L('Passed','Réussis')+'</div><div><b>'+(n-passed)+'</b>'+L('Failed','Échoués')+'</div><div><b>'+avg+'%</b>'+L('Average','Moyenne')+'</div>';
+  $('rempty').classList.toggle('hide', !!n);
+  $('rows').innerHTML = list.map(function(r,i){
+    return '<tr><td>'+(i+1)+'</td><td><b>'+esc(r.n)+'</b></td><td>'+esc(r.lv||'')+'</td><td>'+esc(r.dn||r.sb||'')+(r.rn?'<br><span class="meta">'+esc(r.rn)+'</span>':'')+(r.ref?'<br><span class="meta">Ref '+esc(r.ref)+'</span>':'')+'</td>'+
+      '<td class="num">'+r.c+' / '+r.t+'</td><td class="num"><b>'+r.p+'%</b></td><td class="'+(r.ok?'pass':'fail')+'">'+(r.ok?'PASS':'FAIL')+'</td><td>'+esc(fmtDate(r.ts))+'</td>'+
+      '<td class="act noprint" style="white-space:nowrap">'+((r.ph||r.ph2)?'<button class="o sm" data-ph="'+esc(r.id)+'">📷</button> ':'')+'<button class="o sm" data-slip="'+esc(r.id)+'">🖨</button> <button class="r sm" data-rm="'+esc(r.id)+'">Delete</button></td></tr>';
+  }).join('');
+}
+$('rq').addEventListener('input', render);
+function studentMsg(){
+  if (LANG === 'fr') return 'Smart Academy International — test de classe\n\nClasse : '+data.name+'\nRéférence de classe : '+data.ref+'\n\n1) Ouvrez l’application Smart Academy AI : https://www.smartacademy-ai.com\n2) Choisissez « Avec identité » et entrez votre prénom et votre classe.\n3) Saisissez la référence de classe ci-dessus dans la case « Class reference ».\n4) Faites le test. Votre résultat est envoyé à votre enseignant.\n\nUn code d’accès ne peut être utilisé que par un seul élève.';
+  return 'Smart Academy International — class test\n\nClass: '+data.name+'\nClass reference: '+data.ref+'\n\n1) Open the Smart Academy AI app: https://www.smartacademy-ai.com\n2) Choose "Avec identité" and enter your name and grade.\n3) Type the class reference above in the "Class reference" box.\n4) Do the test. Your result goes to your lecturer.\n\nOne access code can be used by one student only.';
+}
+$('rcopy').onclick = function(){ if (data) copyText(data.ref, this); };
+$('rcopymsg').onclick = function(){ if (data) copyText(studentMsg(), this); };
+$('rwa').onclick = function(){ if (data) window.open('https://wa.me/?text='+encodeURIComponent(studentMsg()), '_blank'); };
+$('back').onclick = function(){ auth = null; try{ sessionStorage.removeItem('lec_sess'); }catch(e){} show('login'); };
+$('back').textContent = L('← Sign out','← Se déconnecter');
+$('rrel').onclick = function(){ load(); };
+$('rprint').onclick = function(){ document.body.classList.remove('slipmode'); window.print(); };
+$('rcsv').onclick = function(){
+  var lines = [LANG==='fr' ? ['Nom','Classe','Matière','Document','N° de rapport','Points','Sur','Pourcentage','Résultat','Date'] : ['Name','Grade','Subject','Document','Report no','Marks','Out of','Percent','Result','Date']];
+  rows.forEach(function(r){ lines.push([r.n,r.lv||'',r.sb||'',r.dn||'',r.rn||'',r.c,r.t,r.p,r.ok?L('PASS','RÉUSSI'):L('FAIL','ÉCHEC'),fmtDate(r.ts)]); });
+  var csv = lines.map(function(l){ return l.map(function(v){ v = String(v); return /[",\n;]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }).join(','); }).join('\r\n');
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'})); a.download = data.ref+'-results.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){ a.remove(); }, 500);
+};
+$('rows').addEventListener('click', async function(e){
+  var t = e.target; if (!t || t.tagName !== 'BUTTON') return;
+  if (t.dataset.rm){
+    var r = rows.filter(function(x){ return x.id === t.dataset.rm; })[0];
+    if (!confirm(L('Delete the result of '+(r?r.n:'this student')+'?','Supprimer le résultat de '+(r?r.n:'cet élève')+' ?'))) return;
+    var body = {action:'class-delete-result', ref:data.ref, id:t.dataset.rm}; body.lec = auth.lec; body.accessCode = auth.accessCode;
+    var j = await api(body); if (!j.ok) return msg('rmsg', trErr(j.error||'Error'));
+    rows = rows.filter(function(x){ return x.id !== t.dataset.rm; }); render(); msg('rmsg',L('Deleted.','Supprimé.'),'k'); return;
+  }
+  if (t.dataset.ph){
+    var pr = rows.filter(function(x){ return x.id === t.dataset.ph; })[0];
+    var jj = await api({action:'class-photo', ref:data.ref, id:t.dataset.ph, lec:auth.lec, accessCode:auth.accessCode});
+    if (!jj.ok || (!jj.photo && !jj.photo2)) return msg('rmsg',L('No photo for this result.','Aucune photo pour ce résultat.'));
+    function pf(u,cap){ return u ? '<div style="flex:1;min-width:140px"><img src="'+u+'" style="width:100%;border-radius:10px;transform:scaleX(-1)"><div class="meta" style="margin-top:4px">'+cap+'</div></div>' : '<div style="flex:1;min-width:140px;padding:30px 6px;background:#f3f6fb;border-radius:10px" class="meta">'+cap+'<br>— none —</div>'; }
+    $('phbox').innerHTML = '<div style="background:#fff;border-radius:14px;padding:14px;max-width:520px;width:100%;text-align:center"><div style="display:flex;gap:10px;flex-wrap:wrap">'+pf(jj.photo,L('Before the test (taken by the student)','Avant le test (prise par l’élève)'))+pf(jj.photo2,L('During the test (automatic)','Pendant le test (automatique)'))+'</div><div style="margin:8px 0"><b>'+esc(pr?pr.n:'')+'</b></div><button id="phx">Close</button></div>';
+    $('phbox').className = 'pho'; $('phx').onclick = function(){ $('phbox').className = 'hide'; $('phbox').innerHTML = ''; }; return;
+  }
+  if (t.dataset.slip){
+    var s = rows.filter(function(x){ return x.id === t.dataset.slip; })[0]; if (!s) return;
+    $('slip').innerHTML = '<h2>Smart Academy International</h2><div class="sub">'+L('Test result slip','Fiche de résultat du test')+' · '+esc(data.name)+' · '+esc(data.ref)+'</div>'+
+      '<table><tr><td>'+L('Student','Élève')+'</td><td><b>'+esc(s.n)+'</b></td></tr><tr><td>'+L('Grade / level','Classe / niveau')+'</td><td>'+esc(s.lv||'—')+'</td></tr><tr><td>'+L('Subject','Matière')+'</td><td>'+esc(s.sb||'—')+'</td></tr><tr><td>Document</td><td>'+esc(s.dn||'—')+'</td></tr><tr><td>Date</td><td>'+esc(fmtDate(s.ts))+'</td></tr></table>'+
+      '<div class="big">'+s.p+'%</div><div style="text-align:center">'+s.c+' / '+s.t+' '+L('correct','correct(s)')+' · <b class="'+(s.ok?'pass':'fail')+'">'+(s.ok?L('PASS','RÉUSSI'):L('FAIL','ÉCHEC'))+'</b> ('+L('pass mark','seuil de réussite')+' '+data.passMark+'%)</div>'+
+      '<div style="margin-top:34px;display:flex;justify-content:space-between;font-size:12px;color:#444"><span>'+L('Lecturer signature','Signature de l’enseignant')+': ______________</span><span>'+L('Printed ','Imprimé le ')+esc(fmtDate(Date.now()))+'</span></div>';
+    (async function(){
+      var ph = '';
+      if (s.ph || s.ph2){ var q = await api({action:'class-photo', ref:data.ref, id:s.id, lec:auth.lec, accessCode:auth.accessCode}); if (q.ok && (q.photo || q.photo2)) ph = '<div style="text-align:center;margin:10px 0">'+(q.photo?'<img src="'+q.photo+'" style="width:110px;border-radius:8px;transform:scaleX(-1);margin:0 4px">':'')+(q.photo2?'<img src="'+q.photo2+'" style="width:110px;border-radius:8px;transform:scaleX(-1);margin:0 4px">':'')+'</div>'; }
+      if (ph) $('slip').innerHTML = $('slip').innerHTML.replace('<table>', ph+'<table>');
+      if (s.rn) $('slip').innerHTML += '<div style="margin-top:10px;font-size:12px;color:#444;text-align:center">'+L('Report no.','Rapport n°')+' '+esc(s.rn)+' · '+L('verify at','vérifier sur')+' smartacademy-ai.com/courses.html</div>';
+      document.body.classList.add('slipmode'); window.print();
+    })(); return; setTimeout(function(){ document.body.classList.remove('slipmode'); }, 500);
+  }
+});
+$('rclear').onclick = async function(){
+  if (!rows.length) return msg('rmsg',L('Nothing to delete.','Rien à supprimer.'),'i');
+  if (!confirm(L('Delete ALL '+rows.length+' results of '+data.ref+'? This cannot be undone. (Tip: print or download the CSV first.)','Supprimer TOUS les '+rows.length+' résultats de '+data.ref+' ? Action irréversible. (Astuce : imprimez ou téléchargez d’abord le CSV.)'))) return;
+  var body = {action:'class-clear', ref:data.ref}; body.lec = auth.lec; body.accessCode = auth.accessCode;
+  var j = await api(body); if (!j.ok) return msg('rmsg', trErr(j.error||'Error'));
+  rows = []; render(); msg('rmsg',L('All results deleted ('+j.deleted+').','Tous les résultats ont été supprimés ('+j.deleted+').'),'k');
+};
+window.addEventListener('afterprint', function(){ document.body.classList.remove('slipmode'); });
+
+function show(which){ ['login','results'].forEach(function(x){ $(x).classList.toggle('hide', x !== which); }); window.scrollTo(0,0); }
+function candidateCodes(){
+  var out = [];
+  try { var ac = localStorage.getItem('saa_active_code'); if (ac) out.push(ac); } catch(e){}
+  try { var lr = localStorage.getItem('saa_last_report_code'); if (lr) out.push(lr); } catch(e){}
+  try { var p = localStorage.getItem('saa_play_code'); if (p) out.push(p); } catch(e){}
+  try { var s = JSON.parse(localStorage.getItem('saa_saved_codes')||'[]'); for (var i = s.length-1; i >= 0; i--) if (s[i] && s[i].code) out.push(s[i].code); } catch(e){}
+  try { var sc = JSON.parse(localStorage.getItem('saa_codes')||'[]'); for (var k = sc.length-1; k >= 0; k--) if (sc[k] && sc[k].code) out.push(sc[k].code); } catch(e){}
+  try { var m = localStorage.getItem('lec_acc'); if (m) out.unshift(m); } catch(e){}
+  return out.filter(function(c,i,a){ return c && a.indexOf(c) === i; });
+}
+(function(){ var c = candidateCodes(); if (c.length) $('lacc').value = c[0]; try { var l = localStorage.getItem('lec_code'); if (l) $('llec').value = l; } catch(e){} })();
+async function load(){
+  var j = await api({action:'class-view', lec:auth.lec, accessCode:auth.accessCode});
+  if (!j.ok){ var e = j.error === 'subscription_required' ? L('Your subscription access code is not valid or has expired.','Votre code d’accès (abonnement) n’est pas valide ou a expiré.') : (j.error === 'Wrong lecturer code' ? L('Wrong lecturer code','Code enseignant incorrect') : (/Too many/.test(j.error||'') ? L('Too many wrong attempts. Try again in 15 minutes.','Trop de tentatives incorrectes. Réessayez dans 15 minutes.') : (j.error||L('Error','Erreur')))); msg('lmsg', e); msg('rmsg', e); return false; }
+  data = j; rows = j.results || []; msg('rmsg','');
+  render(); renderDoc(); show('results'); return true;
+}
+$('lgo').onclick = async function(){
+  var acc = $('lacc').value.trim(), lec = $('llec').value.trim();
+  if (!acc) return msg('lmsg',L('Enter your subscription access code.','Entrez votre code d’accès (abonnement).'));
+  if (!lec) return msg('lmsg',L('Enter the lecturer code you received.','Entrez le code enseignant que vous avez reçu.'));
+  msg('lmsg',L('Opening…','Ouverture…'),'i');
+  auth = {lec:lec, accessCode:acc};
+  var ok = await load();
+  if (ok){ try { localStorage.setItem('lec_acc', acc); localStorage.setItem('lec_code', lec); } catch(e){} msg('lmsg',''); }
+  else auth = null;
+};
+$('llec').addEventListener('keydown', function(e){ if (e.key==='Enter') $('lgo').click(); });
+function renderDoc(){
+  $('dcur').innerHTML = data.docTitle ? L('✔ Current notes: ','✔ Notes actuelles : ')+'<b>'+esc(data.docTitle)+'</b> ('+data.docLen+L(' characters). Students can take the test.',' caractères). Les élèves peuvent passer le test.') : '<span style="color:#b45309">'+L('⚠️ No notes uploaded yet — students cannot take the test until you upload them.','⚠️ Aucune note téléversée — les élèves ne peuvent pas passer le test avant que vous les téléversiez.')+'</span>';
+}
+$('dgo').onclick = function(){ $('dfile').value=''; $('dfile').click(); };
+$('dfile').onchange = async function(){
+  var f = this.files[0]; if (!f) return;
+  if (data.docTitle && !confirm(L('Replace the current notes “'+data.docTitle+'” with “'+f.name+'”? Students who start a test after this will be tested on the new notes.','Remplacer les notes actuelles « '+data.docTitle+' » par « '+f.name+' » ? Les élèves qui commencent un test après cela seront testés sur les nouvelles notes.'))) return;
+  msg('dmsg',L('Reading '+f.name+'…','Lecture de '+f.name+'…'),'i');
+  try {
+    var text = await readDoc(f);
+    var j = await api({action:'class-doc-set', lec:auth.lec, accessCode:auth.accessCode, title:f.name.replace(/\.(pdf|docx|txt)$/i,'').replace(/[_-]+/g,' ').trim(), text:text});
+    if (!j.ok) throw new Error(j.error||'Error');
+    msg('dmsg',L('Notes saved: “'+j.title+'” ('+j.chars+' characters'+(j.chars>=60000?', cut at 60 000':'')+').','Notes enregistrées : « '+j.title+' » ('+j.chars+' caractères'+(j.chars>=60000?', coupées à 60 000':'')+').')+lastOcrNote,'k');
+    data.docTitle = j.title; data.docLen = j.chars; renderDoc();
+  } catch(e){ msg('dmsg', trErr(e.message)); }
+};
+
+if (LANG === 'fr'){ document.documentElement.lang = 'fr'; var b1=document.getElementById('lEN'), b2=document.getElementById('lFR'); b1.style.background='#fff'; b2.style.background='#f0a81a'; } trStatic();
+</script>
+</body>
+</html>
